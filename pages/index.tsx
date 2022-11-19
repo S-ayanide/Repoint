@@ -1,10 +1,19 @@
 import React from 'react';
 import { FooterBanner, HeroBanner } from '../components';
+import { client } from '../lib/client';
+import { Banner } from '../models/Banner';
+import { Product } from '../models/Products';
 
-const Home = () => {
+interface IHome {
+  products: Product[];
+  banner: Banner[];
+}
+
+const Home = ({ products, banner }: IHome) => {
+  console.log(banner);
   return (
     <div>
-      <HeroBanner />
+      <HeroBanner heroBanner={banner[0]} />
 
       <div className="products-heading">
         <h2>Black Friday Top Picks</h2>
@@ -18,6 +27,21 @@ const Home = () => {
       <FooterBanner />
     </div>
   );
+};
+
+export const getServerSideProps = async () => {
+  const productsQuery = '*[_type == "product"]';
+  const products: Product[] = await client.fetch(productsQuery);
+
+  const bannerQuery = '*[_type == "banner"]';
+  const banner: Banner = await client.fetch(bannerQuery);
+
+  return {
+    props: {
+      products,
+      banner,
+    },
+  };
 };
 
 export default Home;
