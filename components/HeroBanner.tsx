@@ -15,8 +15,7 @@ const HeroBanner = ({ heroBanner }: IHeroBanner) => {
         <h3>{heroBanner.midText}</h3>
         <img src={urlFor(heroBanner.image) as unknown as string} alt="watch" className="hero-banner-image" />
         <div>
-          {/* TODO: ID to be dynamic */}
-          <Link href="/product/id">
+          <Link href={`/product/${heroBanner.product}`}>
             <button type="button">{heroBanner.buttonText}</button>
           </Link>
           <div className="desc">

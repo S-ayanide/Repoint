@@ -1,16 +1,15 @@
 import React from 'react';
-import { FooterBanner, HeroBanner } from '../components';
+import { FooterBanner, HeroBanner, Product } from '../components';
 import { client } from '../lib/client';
 import { Banner } from '../models/Banner';
-import { Product } from '../models/Products';
+import { Product as ProductModel } from '../models/Products';
 
 interface IHome {
-  products: Product[];
+  products: ProductModel[];
   banner: Banner[];
 }
 
 const Home = ({ products, banner }: IHome) => {
-  console.log(banner);
   return (
     <div>
       <HeroBanner heroBanner={banner[0]} />
@@ -21,7 +20,9 @@ const Home = ({ products, banner }: IHome) => {
       </div>
 
       <div className="products-container">
-        {['Product 1', 'Product 2', 'Product 3', 'Product 4'].map((product) => product)}
+        {products.map((product) => (
+          <Product key={product._id} product={product} />
+        ))}
       </div>
 
       <FooterBanner />
@@ -31,7 +32,7 @@ const Home = ({ products, banner }: IHome) => {
 
 export const getServerSideProps = async () => {
   const productsQuery = '*[_type == "product"]';
-  const products: Product[] = await client.fetch(productsQuery);
+  const products: ProductModel[] = await client.fetch(productsQuery);
 
   const bannerQuery = '*[_type == "banner"]';
   const banner: Banner = await client.fetch(bannerQuery);
