@@ -16,6 +16,7 @@ const Home = ({ products, banner }: IHome) => {
 
       <div className="products-heading">
         <h2>Black Friday Top Picks</h2>
+        <br />
         <p>From the biggest designer brands, to the best of luxury and hidden gems.</p>
       </div>
 
