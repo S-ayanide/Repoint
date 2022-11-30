@@ -26,7 +26,7 @@ const Home = ({ products, banner }: IHome) => {
         ))}
       </div>
 
-      <FooterBanner />
+      <FooterBanner footerBanner={banner[0]} />
     </div>
   );
 };
