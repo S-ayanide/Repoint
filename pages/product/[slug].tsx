@@ -1,6 +1,6 @@
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
-import React from 'react';
+import React, { useState } from 'react';
 import { AiFillStar, AiOutlineMinus, AiOutlinePlus, AiOutlineStar } from 'react-icons/ai';
 import { Product as ProductComponent } from '../../components';
 import { client, urlFor } from '../../lib/client';
@@ -50,18 +50,29 @@ export const getStaticPaths = async () => {
 
 const ProductDetails = ({ product, products }: IProductDetail) => {
   const { image, name, details, price } = product;
+  const [index, setIndex] = useState<number>(0);
   return (
     <div>
       <div className="product-detail-container">
         <div>
           <div className="image-container">
-            <img src={urlFor(image && image[0]) as unknown as string} alt="" />
+            <img
+              src={urlFor(image && image.length > 1 ? image[index] : image[0]) as unknown as string}
+              className="product-detail-image"
+              alt=""
+            />
           </div>
-          {/* <div className="small-image-container">
+          <div className="small-image-container">
             {image?.map((item, i) => (
-              <img key={item} src={urlFor(item) as unknown as string} alt="Item" />
+              <img
+                key={item}
+                src={urlFor(item) as unknown as string}
+                className={i === index ? 'small-image selected-image' : 'small-image'}
+                onMouseEnter={() => setIndex(i)}
+                alt="Item"
+              />
             ))}
-          </div> */}
+          </div>
         </div>
 
         <div className="product-detail-desc">
