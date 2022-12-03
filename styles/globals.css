@@ -385,7 +385,7 @@ span.text-red {
 }
 .remove-item {
   font-size: 24px;
-  color: #374781;
+  color: red;
   cursor: pointer;
   background: transparent;
   border: none;

@@ -21,12 +21,13 @@ export interface IData {
   increaseQuantity: () => void;
   descreaseQuantity: () => void;
   addToCart: ({ product, quantity }: IAddToCart) => void;
+  setShowCart: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 export const StateContext = createContext<IData>({} as IData);
 
 export const StateContextProvider = ({ children }: IContext) => {
-  const [showCart, setshowCart] = useState<boolean>(false);
+  const [showCart, setShowCart] = useState<boolean>(false);
   const [cartItems, setCartItems] = useState<Product[]>([]);
   const [totalPrice, setTotalPrice] = useState(0);
   const [totalQuantities, setTotalQuantities] = useState(0);
@@ -79,6 +80,7 @@ export const StateContextProvider = ({ children }: IContext) => {
         increaseQuantity,
         descreaseQuantity,
         addToCart,
+        setShowCart,
       }}
     >
       {children}
