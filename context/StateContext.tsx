@@ -1,6 +1,6 @@
 import React, { createContext, useContext, useState } from 'react';
 import toast from 'react-hot-toast';
-import { Product } from '../models/Products';
+import { Product, ToggleCart } from '../models/Products';
 
 interface IContext {
   children: React.ReactNode;
@@ -22,6 +22,7 @@ export interface IData {
   descreaseQuantity: () => void;
   addToCart: ({ product, quantity }: IAddToCart) => void;
   setShowCart: React.Dispatch<React.SetStateAction<boolean>>;
+  toggleCartItemQuantity: (id: string, value: string) => void;
 }
 
 export const StateContext = createContext<IData>({} as IData);
@@ -32,6 +33,9 @@ export const StateContextProvider = ({ children }: IContext) => {
   const [totalPrice, setTotalPrice] = useState(0);
   const [totalQuantities, setTotalQuantities] = useState(0);
   const [qty, setQty] = useState(1);
+
+  let foundProduct;
+  let productIndex;
 
   const addToCart = ({ product, quantity }: IAddToCart) => {
     const checkProductInCart = cartItems.find((item) => item._id === product._id);
@@ -58,6 +62,25 @@ export const StateContextProvider = ({ children }: IContext) => {
     toast.success(`${qty} ${product.name} added to cart`);
   };
 
+  const toggleCartItemQuantity = (id: string, value: string) => {
+    foundProduct = cartItems.find((item) => item._id === id);
+    productIndex = cartItems.findIndex((product) => product._id === id);
+
+    const newCartItems = cartItems.filter((item) => item._id !== id);
+
+    if (value === ToggleCart.INCREMENT) {
+      setCartItems([...newCartItems, { ...foundProduct, quantity: foundProduct.quantity + 1 }]);
+      setTotalPrice((prevTotalPrice) => prevTotalPrice + foundProduct.price);
+      setTotalQuantities((prevTotalQuantities) => prevTotalQuantities + 1);
+    } else if (value === ToggleCart.DECREMENT) {
+      if (foundProduct.quantity > 1) {
+        setCartItems([...newCartItems, { ...foundProduct, quantity: foundProduct.quantity - 1 }]);
+        setTotalPrice((prevTotalPrice) => prevTotalPrice - foundProduct.price);
+        setTotalQuantities((prevTotalQuantities) => prevTotalQuantities - 1);
+      }
+    }
+  };
+
   const increaseQuantity = () => {
     setQty((prev) => prev + 1);
   };
@@ -81,6 +104,7 @@ export const StateContextProvider = ({ children }: IContext) => {
         descreaseQuantity,
         addToCart,
         setShowCart,
+        toggleCartItemQuantity,
       }}
     >
       {children}

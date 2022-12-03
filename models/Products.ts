@@ -11,3 +11,8 @@ export interface Product {
   price: number;
   details: string;
 }
+
+export enum ToggleCart {
+  INCREMENT = 'increment',
+  DECREMENT = 'decrement',
+}
