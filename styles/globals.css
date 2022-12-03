@@ -541,6 +541,7 @@ span.text-red {
 }
 .quantity-desc .minus {
   border-right: 1px solid gray;
+  padding: 8px;
   color: #374781;
 }
 .quantity-desc .num {

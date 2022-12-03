@@ -3,6 +3,7 @@
 import React, { useState } from 'react';
 import { AiFillStar, AiOutlineMinus, AiOutlinePlus, AiOutlineStar } from 'react-icons/ai';
 import { Product as ProductComponent } from '../../components';
+import { useStateContext } from '../../context/StateContext';
 import { client, urlFor } from '../../lib/client';
 import { Product } from '../../models/Products';
 
@@ -51,6 +52,7 @@ export const getStaticPaths = async () => {
 const ProductDetails = ({ product, products }: IProductDetail) => {
   const { image, name, details, price } = product;
   const [index, setIndex] = useState<number>(0);
+  const { descreaseQuantity, increaseQuantity, qty } = useStateContext();
   return (
     <div>
       <div className="product-detail-container">
@@ -93,13 +95,13 @@ const ProductDetails = ({ product, products }: IProductDetail) => {
           <div className="quantity">
             <h3>Quantity: </h3>
             <p className="quantity-desc">
-              <span className="minus" onClick={() => void 0}>
+              <span className="minus" onClick={descreaseQuantity}>
                 <AiOutlineMinus />
               </span>
               <span className="num" onClick={() => void 0}>
-                0
+                {qty}
               </span>
-              <span className="plus" onClick={() => void 0}>
+              <span className="plus" onClick={increaseQuantity}>
                 <AiOutlinePlus />
               </span>
             </p>
