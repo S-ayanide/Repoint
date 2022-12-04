@@ -14,6 +14,7 @@ const Layout = ({ children }: ILayout) => {
         <title>Repoint</title>
       </Head>
       <header>
+        <div className="dev">This is only for development purpose, please donot use your original card details</div>
         <NavBar />
       </header>
       <main className="main-container">{children}</main>
