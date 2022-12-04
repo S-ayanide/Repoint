@@ -42,7 +42,7 @@ const Cart = () => {
                 <div className="item-desc">
                   <div className="flex top">
                     <h3>{item.name}</h3>
-                    <h3>₹{item.price}</h3>
+                    <h3>₹{item.price.toFixed(2)}</h3>
                   </div>
                   <div className="flex bottom">
                     <div>
@@ -70,7 +70,7 @@ const Cart = () => {
           <div className="cart-bottom">
             <div className="total">
               <h3>Subtotal:</h3>
-              <h3>₹{totalPrice}</h3>
+              <h3>₹{totalPrice.toFixed(2)}</h3>
             </div>
             <div className="btn-container">
               <button type="button" className="btn" onClick={void 0}>
