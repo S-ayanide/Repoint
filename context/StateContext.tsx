@@ -24,6 +24,9 @@ export interface IData {
   setShowCart: React.Dispatch<React.SetStateAction<boolean>>;
   toggleCartItemQuantity: (id: string, value: string) => void;
   removeFromCart: (product: Product) => void;
+  setCartItems: React.Dispatch<React.SetStateAction<Product[]>>;
+  setTotalPrice: React.Dispatch<React.SetStateAction<number>>;
+  setTotalQuantities: React.Dispatch<React.SetStateAction<number>>;
 }
 
 export const StateContext = createContext<IData>({} as IData);
@@ -116,6 +119,9 @@ export const StateContextProvider = ({ children }: IContext) => {
         setShowCart,
         toggleCartItemQuantity,
         removeFromCart,
+        setCartItems,
+        setTotalPrice,
+        setTotalQuantities,
       }}
     >
       {children}
