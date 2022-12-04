@@ -10,7 +10,8 @@ import { ToggleCart } from '../models/Products';
 
 const Cart = () => {
   const cartRef = useRef<HTMLDivElement>(null);
-  const { totalPrice, totalQuantities, cartItems, setShowCart, toggleCartItemQuantity } = useStateContext();
+  const { totalPrice, totalQuantities, cartItems, setShowCart, toggleCartItemQuantity, removeFromCart } =
+    useStateContext();
 
   return (
     <div className="cart-wrapper" ref={cartRef}>
@@ -57,7 +58,7 @@ const Cart = () => {
                         </span>
                       </p>
                     </div>
-                    <button type="button" className="remove-item" onClick={() => void 0}>
+                    <button type="button" className="remove-item" onClick={() => removeFromCart(item)}>
                       <TiDeleteOutline />
                     </button>
                   </div>

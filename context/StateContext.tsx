@@ -23,6 +23,7 @@ export interface IData {
   addToCart: ({ product, quantity }: IAddToCart) => void;
   setShowCart: React.Dispatch<React.SetStateAction<boolean>>;
   toggleCartItemQuantity: (id: string, value: string) => void;
+  removeFromCart: (product: Product) => void;
 }
 
 export const StateContext = createContext<IData>({} as IData);
@@ -81,6 +82,15 @@ export const StateContextProvider = ({ children }: IContext) => {
     }
   };
 
+  const removeFromCart = (product: Product) => {
+    foundProduct = cartItems.find((item) => item._id === product._id);
+    const newCartItems = cartItems.filter((item) => item._id !== product._id);
+
+    setTotalPrice((prevTotalPrice) => prevTotalPrice - foundProduct.price * foundProduct.quantity);
+    setTotalQuantities((prevTotalQuantities) => prevTotalQuantities - foundProduct.quantity);
+    setCartItems(newCartItems);
+  };
+
   const increaseQuantity = () => {
     setQty((prev) => prev + 1);
   };
@@ -105,6 +115,7 @@ export const StateContextProvider = ({ children }: IContext) => {
         addToCart,
         setShowCart,
         toggleCartItemQuantity,
+        removeFromCart,
       }}
     >
       {children}
