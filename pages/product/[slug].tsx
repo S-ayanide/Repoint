@@ -52,7 +52,14 @@ export const getStaticPaths = async () => {
 const ProductDetails = ({ product, products }: IProductDetail) => {
   const { image, name, details, price } = product;
   const [index, setIndex] = useState<number>(0);
-  const { descreaseQuantity, increaseQuantity, addToCart, qty } = useStateContext();
+  const { descreaseQuantity, increaseQuantity, addToCart, qty, setShowCart } = useStateContext();
+
+  const handleBuyNow = () => {
+    addToCart({ product, quantity: qty });
+
+    setShowCart(true);
+  };
+
   return (
     <div>
       <div className="product-detail-container">
@@ -98,9 +105,7 @@ const ProductDetails = ({ product, products }: IProductDetail) => {
               <span className="minus" onClick={descreaseQuantity}>
                 <AiOutlineMinus />
               </span>
-              <span className="num" onClick={() => void 0}>
-                {qty}
-              </span>
+              <span className="num">{qty}</span>
               <span className="plus" onClick={increaseQuantity}>
                 <AiOutlinePlus />
               </span>
@@ -110,7 +115,7 @@ const ProductDetails = ({ product, products }: IProductDetail) => {
             <button type="button" className="add-to-cart" onClick={() => addToCart({ product, quantity: qty })}>
               Add to Cart
             </button>
-            <button type="button" className="buy-now" onClick={() => void 0}>
+            <button type="button" className="buy-now" onClick={handleBuyNow}>
               Buy Now
             </button>
           </div>
